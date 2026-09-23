@@ -11,8 +11,8 @@
 import { useState, type ReactNode } from "react";
 
 const TABS = [
-  { key: "problem", label: "The Problem" },
-  { key: "design", label: "Designing the Algorithm" },
+  { key: "problem",  label: "The Problem" },
+  { key: "design",   label: "Designing the Algorithm" },
   { key: "analysis", label: "Analyzing the Algorithm" },
 ] as const;
 
@@ -55,24 +55,32 @@ export default function TriLayout({
   return (
     <div className="flex flex-col">
       {/* Tab bar */}
-      <nav className="flex border-b border-gray-200">
-        {TABS.map(({ key, label }) => (
-          <button
-            key={key}
-            onClick={() => handleSwitch(key)}
-            className={`px-6 py-3 text-sm font-medium transition-colors ${
-              active === key
-                ? "border-b-2 border-blue-600 text-blue-600"
-                : "text-gray-500 hover:text-gray-800"
-            }`}
-          >
-            {label}
-          </button>
-        ))}
+      <nav className="flex items-end gap-1 border-b border-slate-200 px-1">
+        {TABS.map(({ key, label }) => {
+          const isActive = active === key;
+          return (
+            <button
+              key={key}
+              onClick={() => handleSwitch(key)}
+              className={[
+                "relative px-5 py-3 text-sm font-medium rounded-t-lg transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-primary-400",
+                isActive
+                  ? "text-primary-600 bg-white border border-b-0 border-slate-200 shadow-sm -mb-px"
+                  : "text-slate-500 hover:text-slate-800 hover:bg-slate-100/70",
+              ].join(" ")}
+            >
+              {isActive && (
+                <span className="absolute inset-x-3 bottom-0 h-0.5 rounded-full bg-primary-500" />
+              )}
+              {label}
+            </button>
+          );
+        })}
       </nav>
 
       {/* Active tab content */}
-      <div className="p-6">{content[active]}</div>
+      <div className="p-6 pt-8">{content[active]}</div>
     </div>
   );
 }
+

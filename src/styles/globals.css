@@ -5,29 +5,57 @@
 /*
  * CLRS × K&T Visualizer — Global Styles
  * ──────────────────────────────────────
- * Tailwind layers handle most styling; this file adds
- * typography and CLRS-specific pseudocode block theming.
  */
 
 @layer base {
   body {
-    @apply font-sans;
+    @apply font-sans text-slate-900 bg-slate-50;
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -10%, rgb(238 242 255 / 0.6), transparent),
+      linear-gradient(to bottom, #f8fafc, #f1f5f9);
+    min-height: 100vh;
   }
 }
 
 @layer components {
   /* CLRS tan-background pseudocode block */
   .clrs-pseudocode {
-    @apply rounded-lg border border-clrs-line bg-clrs-tan p-4 font-mono text-sm leading-relaxed;
+    @apply rounded-xl border border-clrs-line/40 bg-clrs-tan p-5 font-mono text-sm leading-7 overflow-x-auto;
+    border-left: 3px solid #c4b99a;
   }
 
   /* Line number gutter inside pseudocode */
   .clrs-line-number {
     @apply mr-4 inline-block w-6 select-none text-right text-clrs-line;
+    border-right: 1px solid #ddd4bb;
+    padding-right: 0.5rem;
+    margin-right: 0.75rem;
   }
 
   /* Active (highlighted) pseudocode line */
   .clrs-line-active {
-    @apply rounded bg-yellow-200/60;
+    @apply rounded-md;
+    background: linear-gradient(90deg, rgb(251 191 36 / 0.25), rgb(251 191 36 / 0.10));
+    box-shadow: inset 3px 0 0 0 #f59e0b;
+  }
+
+  /* Glass card utility */
+  .glass-card {
+    @apply bg-white/80 backdrop-blur-sm border border-white/60 rounded-2xl shadow-card;
+  }
+
+  /* Primary icon button */
+  .btn-icon {
+    @apply inline-flex items-center justify-center w-9 h-9 rounded-lg text-slate-600
+           bg-white border border-slate-200 shadow-sm
+           hover:bg-slate-50 hover:border-slate-300
+           transition-all duration-150
+           disabled:opacity-40 disabled:cursor-not-allowed;
+  }
+
+  .btn-icon-primary {
+    @apply btn-icon bg-primary-600 border-primary-700 text-white
+           hover:bg-primary-700 hover:border-primary-800;
   }
 }
+
